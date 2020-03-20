@@ -14,6 +14,11 @@ router.get('/', notLogin, function (req, res, next) {
     next();
 });
 
+router.get('/logout', isLogin, (req, res) => {
+    req.logout();
+    res.redirect('/');
+});
+
 router.get('/signup', async (req, res) => {
     let messages = req.flash('error');
     console.log(messages);
@@ -37,11 +42,6 @@ router.post('/signin', passport.authenticate('local.signin', {
     failureRedirect: '/users/signin',
     failureFlash: true
 }));
-
-router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/users/signin');
-})
 
 module.exports = router;
 
