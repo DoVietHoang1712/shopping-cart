@@ -30,5 +30,13 @@ router.get('/shopping-cart', async (req, res) => {
     let cart = new Cart(req.session.cart);
     console.log(cart.generateArray());
     res.render('shop/shop-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+});
+
+router.get('/checkout', (req, res) => {
+    if(!req.session.cart){
+        return res.redirect('/shopping-cart');
+    }
+    let cart = new Cart(req.session.cart);
+    res.render('shop/checkout.ejs', {total: cart.totalPrice, })
 })
 module.exports = router;
