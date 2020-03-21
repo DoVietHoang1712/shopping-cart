@@ -23,4 +23,12 @@ router.get('/add-to-cart/:id', async (req, res) => {
     })
 });
 
+router.get('/shopping-cart', async (req, res) => {
+    if(!req.session.cart){
+        return res.render('shop/shop-cart.ejs', {products: null});
+    }
+    let cart = new Cart(req.session.cart);
+    console.log(cart.generateArray());
+    res.render('shop/shop-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+})
 module.exports = router;
