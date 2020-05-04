@@ -34,16 +34,10 @@ let products = [
     }),
 ];
 
-let done = 0;
-for(let i = 0; i < products.length; i++){
-    products[i].save(function(err, result){
-        done++;
-        if(done == products.length){
-            exit();
-        }
-    });
-}
-
-function exit() {
-    mongoose.disconnect();
-}
+products.forEach(async (product) => {
+    try {
+        await product.save();
+    } catch (error) {
+        console.log(error);
+    }
+})
